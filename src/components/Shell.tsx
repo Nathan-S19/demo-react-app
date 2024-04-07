@@ -50,11 +50,11 @@ const userNavigation = [
   { name: "Sign out", href: "#" },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Shell({ children }: { children: any }) {
+export default function Shell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

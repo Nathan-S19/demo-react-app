@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as rootDImport } from './routes/__root.d'
 import { Route as ProjectsImport } from './routes/projects'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as ProjectsIndexImport } from './routes/projects.index'
@@ -27,6 +28,11 @@ const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const rootDRoute = rootDImport.update({
+  path: '/d',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutLazyRoute = AboutLazyImport.update({
   path: '/about',
@@ -95,6 +101,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutLazyImport
       parentRoute: typeof rootRoute
     }
+    '/__root/d': {
+      preLoaderRoute: typeof rootDImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard/invoices': {
       preLoaderRoute: typeof DashboardInvoicesImport
       parentRoute: typeof DashboardImport
@@ -129,6 +139,7 @@ export const routeTree = rootRoute.addChildren([
   ]),
   ProjectsRoute.addChildren([ProjectsIndexRoute]),
   AboutLazyRoute,
+  rootDRoute,
 ])
 
 /* prettier-ignore-end */
